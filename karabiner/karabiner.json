@@ -1,7 +1,7 @@
 {
     "global": {
         "check_for_updates_on_startup": true,
-        "show_in_menu_bar": false,
+        "show_in_menu_bar": true,
         "show_profile_name_in_menu_bar": false
     },
     "profiles": [
@@ -16,6 +16,36 @@
                         "vendor_id": 4176
                     },
                     "ignore": true
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 272,
+                        "vendor_id": 4176
+                    },
+                    "ignore": true
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 627,
+                        "vendor_id": 1452
+                    },
+                    "ignore": true
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": false,
+                        "product_id": 1957,
+                        "vendor_id": 1118
+                    },
+                    "ignore": false
                 }
             ],
             "fn_function_keys": {
@@ -32,11 +62,40 @@
                 "f8": "vk_consumer_play",
                 "f9": "vk_consumer_next"
             },
-            "name": "Default profile",
+            "name": "Sculpt Profile",
             "selected": true,
             "simple_modifications": {
+                "application": "f17",
                 "caps_lock": "left_control",
-                "right_option": "f17"
+                "left_command": "left_option",
+                "left_option": "left_command",
+                "right_option": "right_command"
+            },
+            "virtual_hid_keyboard": {
+                "caps_lock_delay_milliseconds": 0,
+                "keyboard_type": "ansi"
+            }
+        },
+        {
+            "devices": [],
+            "fn_function_keys": {
+                "f1": "vk_consumer_brightness_down",
+                "f10": "mute",
+                "f11": "volume_down",
+                "f12": "volume_up",
+                "f2": "vk_consumer_brightness_up",
+                "f3": "vk_mission_control",
+                "f4": "vk_launchpad",
+                "f5": "vk_consumer_illumination_down",
+                "f6": "vk_consumer_illumination_up",
+                "f7": "vk_consumer_previous",
+                "f8": "vk_consumer_play",
+                "f9": "vk_consumer_next"
+            },
+            "name": "Internal Profile",
+            "selected": false,
+            "simple_modifications": {
+                "caps_lock": "left_control"
             },
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
