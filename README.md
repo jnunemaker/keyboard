@@ -103,13 +103,17 @@ Use **control** + **s** to turn on Window Layout Mode. Then, use any shortcut be
 
 ### Markdown Mode
 
-Perform common Markdown-formatting tasks anywhere that you're editing text (e.g., in a GitHub comment, in your editor, in your email client).
+Perform common [Markdown](https://daringfireball.net/projects/markdown/syntax)-formatting tasks anywhere that you're editing text (e.g., in a GitHub comment, in your editor, in your email client).
 
-Use **control** + **m** to turn on Markdown Mode. Then, use any shortcut below to perform an action. For example, to wrap the selected text in double asterisks, hit **control** + **m**, and then **b**.
+Use **control** + **m** to turn on Markdown Mode. Then, use any shortcut below to perform an action. For example, to format the selected text as bold in Markdown, hit **control** + **m**, and then **b**.
 
 - Use **b** to wrap the currently-selected text in double asterisks ("B" for "Bold")
 
     Example: `**selection**`
+
+- Use **c** to wrap the currently-selected text in backticks ("C" for "Code")
+
+    Example: `` `selection` ``
 
 - Use **i** to wrap the currently-selected text in single asterisks ("I" for "Italic")
 
@@ -138,6 +142,7 @@ In this setup, we'll use the **right option** key as our **hyper** key. With a n
 - **hyper** + **e** to open [Atom Beta](https://atom.io/beta) ("E" for "Editor")
 - **hyper** + **f** to open Finder ("F" for "Finder")
 - **hyper** + **g** to open [Mailplane](http://mailplaneapp.com/) ("G" for "Gmail")
+- **hyper** + **s** to open [Slack](https://slack.com/downloads/osx) ("S" for "Slack")
 - **hyper** + **t** to open [iTerm2](https://www.iterm2.com/) ("T" for "Terminal")
 
 Edit [`hammerspoon/hyper.lua`](hammerspoon/hyper.lua) to configure shortcuts to launch your most commonly-used apps.
@@ -156,7 +161,7 @@ Edit [`hammerspoon/hyper.lua`](hammerspoon/hyper.lua) to configure shortcuts to 
 This setup is honed and tested with the following dependencies.
 
 - macOS Sierra, 10.12
-- [Karabiner-Elements 0.90.86][karabiner]
+- [Karabiner-Elements 0.90.88][karabiner]
 - [Hammerspoon 0.9.52][hammerspoon]
 
 ## Installation
@@ -173,6 +178,11 @@ This setup is honed and tested with the following dependencies.
 
 2. Enable accessibility to allow Hammerspoon to do its thing [[screenshot]](screenshots/accessibility-permissions-for-hammerspoon.png)
 
+## TODO
+
+- Add [#13](https://github.com/jasonrudolph/keyboard/pull/13) to [features](#features):
+    - Hold option for push-to-talk/push-to-mute
+    - Double-tap option to mute/unmute microphone
 
 [customize]: http://dictionary.reference.com/browse/customize
 [don't-make-me-think]: http://en.wikipedia.org/wiki/Don't_Make_Me_Think

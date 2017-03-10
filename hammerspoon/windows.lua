@@ -78,8 +78,8 @@ function hs.window.upLeft(win)
   local screen = win:screen()
   local max = screen:fullFrame()
 
-  f.x = 0
-  f.y = 0
+  f.x = max.x
+  f.y = max.y
   f.w = max.w/2
   f.h = max.h/2
   win:setFrame(f)
@@ -95,8 +95,8 @@ function hs.window.downLeft(win)
   local screen = win:screen()
   local max = screen:fullFrame()
 
-  f.x = 0
-  f.y = max.h/2
+  f.x = max.x
+  f.y = max.y + (max.h / 2)
   f.w = max.w/2
   f.h = max.h/2
   win:setFrame(f)
@@ -112,8 +112,8 @@ function hs.window.downRight(win)
   local screen = win:screen()
   local max = screen:fullFrame()
 
-  f.x = max.w/2
-  f.y = max.h/2
+  f.x = max.x + (max.w / 2)
+  f.y = max.y + (max.h / 2)
   f.w = max.w/2
   f.h = max.h/2
 
@@ -130,8 +130,8 @@ function hs.window.upRight(win)
   local screen = win:screen()
   local max = screen:fullFrame()
 
-  f.x = max.w/2
-  f.y = 0
+  f.x = max.x + (max.w / 2)
+  f.y = max.y
   f.w = max.w/2
   f.h = max.h/2
   win:setFrame(f)
@@ -147,7 +147,7 @@ function hs.window.centerWithFullHeight(win)
   local screen = win:screen()
   local max = screen:fullFrame()
 
-  f.x = max.w * 1/5
+  f.x = max.x + (max.w / 5)
   f.w = max.w * 3/5
   f.y = max.y
   f.h = max.h
