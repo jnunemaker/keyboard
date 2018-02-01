@@ -11,7 +11,7 @@ hyperModeAppMappings = {
   { 'f', 'Finder' },                -- "F" for "Finder"
   { 'g', 'Mailplane 3' },           -- "G" for "Gmail"
   { 's', 'Slack' },                 -- "S" for "Slack"
-  { 't', 'iTerm' },                 -- "T" for "Terminal"
+  { 't', 'Terminal' },                 -- "T" for "Terminal"
 }
 
 for i, mapping in ipairs(hyperModeAppMappings) do
