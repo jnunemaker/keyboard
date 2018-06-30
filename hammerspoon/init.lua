@@ -8,6 +8,7 @@ end)
 keyUpDown = function(modifiers, key)
   -- Un-comment & reload config to log each keystroke that we're triggering
   -- log.d('Sending keystroke:', hs.inspect(modifiers), key)
+
   hs.eventtap.keyStroke(modifiers, key, 0)
 end
 
@@ -30,13 +31,13 @@ enableHotkeyForWindowsMatchingFilter = function(windowFilter, hotkey)
   end)
 end
 
-require('control-escape')
-require('delete-words')
-require('hyper')
-require('markdown')
-require('microphone')
-require('panes')
-require('super')
-require('windows')
+require('keyboard.control-escape')
+require('keyboard.delete-words')
+require('keyboard.hyper')
+require('keyboard.markdown')
+require('keyboard.microphone')
+require('keyboard.panes')
+require('keyboard.super')
+require('keyboard.windows')
 
 hs.notify.new({title='Hammerspoon', informativeText='Ready to rock 🤘'}):send()

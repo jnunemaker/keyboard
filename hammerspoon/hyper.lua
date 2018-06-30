@@ -1,34 +1,39 @@
--- A global variable for Hyper Mode
-hyperMode = hs.hotkey.modal.new({}, 'F18')
+-- Look for custom Hyper Mode app mappings. If there are none, then use the
+-- default mappings.
+local status, hyperModeAppMappings = pcall(require, 'keyboard.hyper-apps')
+if not status then
+  hyperModeAppMappings = require('keyboard.hyper-apps-defaults')
+end
 
--- Keybindings for launching apps in Hyper Mode
-hyperModeAppMappings = {
-  { 'a', 'iTunes' },                -- "A" for "Apple Music"
-  { 'b', 'Google Chrome' },         -- "B" for "Browser"
-  { 'c', 'Hackable Slack Client' }, -- "C for "Chat"
-  { 'd', 'Remember The Milk' },     -- "D" for "Do!" ... or "Done!"
-  { 'e', 'Atom Beta' },             -- "E" for "Editor"
-  { 'f', 'Finder' },                -- "F" for "Finder"
-  { 'g', 'Mailplane 3' },           -- "G" for "Gmail"
-  { 's', 'Slack' },                 -- "S" for "Slack"
-  { 't', 'Terminal' },                 -- "T" for "Terminal"
-}
+-- Create a hotkey that will enter Hyper Mode when 'alt' is tapped (i.e.,
+-- when 'alt' is pressed and then released in quick succession).
+local hotkey = require('keyboard.tap-modifier-for-hotkey')
+hyperMode = hotkey.new('alt')
 
+-- Bind the hotkeys that will be active when we're in Hyper Mode
 for i, mapping in ipairs(hyperModeAppMappings) do
-  hyperMode:bind({}, mapping[1], function()
-    hs.application.launchOrFocus(mapping[2])
+  local key = mapping[1]
+  local app = mapping[2]
+  hyperMode:bind(key, function()
+    if (type(app) == 'string') then
+      hs.application.open(app)
+    elseif (type(app) == 'function') then
+      app()
+    else
+      hs.logger.new('hyper'):e('Invalid mapping for Hyper +', key)
+    end
   end)
 end
 
--- Enter Hyper Mode when F17 (right option key) is pressed
-pressedF17 = function()
-  hyperMode:enter()
+-- Show a status message when we're in Hyper Mode
+local message = require('keyboard.status-message')
+hyperMode.statusMessage = message.new('Hyper Mode')
+hyperMode.entered = function()
+  hyperMode.statusMessage:show()
+end
+hyperMode.exited = function()
+  hyperMode.statusMessage:hide()
 end
 
--- Leave Hyper Mode when F17 (right option key) is released.
-releasedF17 = function()
-  hyperMode:exit()
-end
-
--- Bind the Hyper key
-f17 = hs.hotkey.bind({}, 'F17', pressedF17, releasedF17)
+-- We're all set. Now we just enable Hyper Mode and get to work. 👔
+hyperMode:enable()

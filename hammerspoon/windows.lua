@@ -154,6 +154,40 @@ function hs.window.centerWithFullHeight(win)
   win:setFrame(f)
 end
 
+-- +-----------------+
+-- |      |          |
+-- | HERE |          |
+-- |      |          |
+-- +-----------------+
+function hs.window.left40(win)
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
+
+  f.x = max.x
+  f.y = max.y
+  f.w = max.w * 0.4
+  f.h = max.h
+  win:setFrame(f)
+end
+
+-- +-----------------+
+-- |      |          |
+-- |      |   HERE   |
+-- |      |          |
+-- +-----------------+
+function hs.window.right60(win)
+  local f = win:frame()
+  local screen = win:screen()
+  local max = screen:frame()
+
+  f.x = max.w * 0.4
+  f.y = max.y
+  f.w = max.w * 0.6
+  f.h = max.h
+  win:setFrame(f)
+end
+
 function hs.window.nextScreen(win)
   local currentScreen = win:screen()
   local allScreens = hs.screen.allScreens()
@@ -167,28 +201,8 @@ function hs.window.nextScreen(win)
   end
 end
 
---------------------------------------------------------------------------------
--- Define WindowLayout Mode
---
--- WindowLayout Mode allows you to manage window layout using keyboard shortcuts
--- that are on the home row, or very close to it. Use Control+s to turn
--- on WindowLayout mode. Then, use any shortcut below to perform a window layout
--- action. For example, to send the window left, press and release
--- Control+s, and then press h.
---
---   h/j/k/l => send window to the left/bottom/top/right half of the screen
---   i => send window to the upper left quarter of the screen
---   o => send window to the upper right quarter of the screen
---   , => send window to the lower left quarter of the screen
---   . => send window to the lower right quarter of the screen
---   return => make window full screen
---   n => send window to the next monitor
---------------------------------------------------------------------------------
-
 windowLayoutMode = hs.hotkey.modal.new({}, 'F16')
 
-local message = require('status-message')
-windowLayoutMode.statusMessage = message.new('Window Layout Mode (control-s)')
 windowLayoutMode.entered = function()
   windowLayoutMode.statusMessage:show()
 end
@@ -197,61 +211,64 @@ windowLayoutMode.exited = function()
 end
 
 -- Bind the given key to call the given function and exit WindowLayout mode
-function windowLayoutMode.bindWithAutomaticExit(mode, key, fn)
-  mode:bind({}, key, function()
+function windowLayoutMode.bindWithAutomaticExit(mode, modifiers, key, fn)
+  mode:bind(modifiers, key, function()
     mode:exit()
     fn()
   end)
 end
 
-windowLayoutMode:bindWithAutomaticExit('return', function()
-  hs.window.focusedWindow():maximize()
-end)
+local status, windowMappings = pcall(require, 'keyboard.windows-bindings')
 
-windowLayoutMode:bindWithAutomaticExit('space', function()
-  hs.window.focusedWindow():centerWithFullHeight()
-end)
+if not status then
+  windowMappings = require('keyboard.windows-bindings-defaults')
+end
 
-windowLayoutMode:bindWithAutomaticExit('h', function()
-  hs.window.focusedWindow():left()
-end)
+local modifiers = windowMappings.modifiers
+local showHelp  = windowMappings.showHelp
+local trigger   = windowMappings.trigger
+local mappings  = windowMappings.mappings
 
-windowLayoutMode:bindWithAutomaticExit('j', function()
-  hs.window.focusedWindow():down()
-end)
+function getModifiersStr(modifiers)
+  local modMap = { shift = '⇧', ctrl = '⌃', alt = '⌥', cmd = '⌘' }
+  local retVal = ''
 
-windowLayoutMode:bindWithAutomaticExit('k', function()
-  hs.window.focusedWindow():up()
-end)
+  for i, v in ipairs(modifiers) do
+    retVal = retVal .. modMap[v]
+  end
 
-windowLayoutMode:bindWithAutomaticExit('l', function()
-  hs.window.focusedWindow():right()
-end)
+  return retVal
+end
 
-windowLayoutMode:bindWithAutomaticExit('i', function()
-  hs.window.focusedWindow():upLeft()
-end)
+local msgStr = getModifiersStr(modifiers)
+msgStr = 'Window Layout Mode (' .. msgStr .. (string.len(msgStr) > 0 and '+' or '') .. trigger .. ')'
 
-windowLayoutMode:bindWithAutomaticExit('o', function()
-  hs.window.focusedWindow():upRight()
-end)
+for i, mapping in ipairs(mappings) do
+  local modifiers, trigger, winFunction = table.unpack(mapping)
+  local hotKeyStr = getModifiersStr(modifiers)
 
-windowLayoutMode:bindWithAutomaticExit(',', function()
-  hs.window.focusedWindow():downLeft()
-end)
+  if showHelp == true then
+    if string.len(hotKeyStr) > 0 then
+      msgStr = msgStr .. (string.format('\n%10s+%s => %s', hotKeyStr, trigger, winFunction))
+    else
+      msgStr = msgStr .. (string.format('\n%11s => %s', trigger, winFunction))
+    end
+  end
 
-windowLayoutMode:bindWithAutomaticExit('.', function()
-  hs.window.focusedWindow():downRight()
-end)
+  windowLayoutMode:bindWithAutomaticExit(modifiers, trigger, function()
+    --example: hs.window.focusedWindow():upRight()
+    local fw = hs.window.focusedWindow()
+    fw[winFunction](fw)
+  end)
+end
 
-windowLayoutMode:bindWithAutomaticExit('n', function()
-  hs.window.focusedWindow():nextScreen()
-end)
+local message = require('keyboard.status-message')
+windowLayoutMode.statusMessage = message.new(msgStr)
 
--- Use Control+s to toggle WindowLayout Mode
-hs.hotkey.bind({'ctrl'}, 's', function()
+-- Use modifiers+trigger to toggle WindowLayout Mode
+hs.hotkey.bind(modifiers, trigger, function()
   windowLayoutMode:enter()
 end)
-windowLayoutMode:bind({'ctrl'}, 's', function()
+windowLayoutMode:bind(modifiers, trigger, function()
   windowLayoutMode:exit()
 end)

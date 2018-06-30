@@ -43,7 +43,7 @@ function inlineLink()
     -- Allow some time for the command+v keystroke to fire asynchronously before
     -- we restore the original clipboard
     hs.timer.doAfter(0.2, function()
-      hs.pasteboard.setContents(originalClipboardContents)
+      hs.pasteboard.setContents(linkUrl)
     end)
   end)
 end
@@ -66,7 +66,7 @@ end
 
 markdownMode = hs.hotkey.modal.new({}, 'F20')
 
-local message = require('status-message')
+local message = require('keyboard.status-message')
 markdownMode.statusMessage = message.new('Markdown Mode (control-m)')
 markdownMode.entered = function()
   markdownMode.statusMessage:show()
