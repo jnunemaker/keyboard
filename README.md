@@ -163,9 +163,9 @@ Hyper Mode ships with the default keybindings below, but you'll likely want to p
 
 This setup is honed and tested with the following dependencies.
 
-- macOS High Sierra, 10.13
-- [Karabiner-Elements 12.2.0][karabiner]
-- [Hammerspoon 0.9.73][hammerspoon]
+- macOS Catalina, 10.15
+- [Karabiner-Elements 13.0.0][karabiner]
+- [Hammerspoon 0.9.81][hammerspoon]
 
 ## Installation
 
@@ -181,15 +181,7 @@ This setup is honed and tested with the following dependencies.
 
 2. Enable accessibility to allow Hammerspoon to do its thing [[screenshot]](screenshots/accessibility-permissions-for-hammerspoon.png)
 
-3. On macOS High Sierra or later, you'll be [prompted to allow Karabiner-Elements to load its kernel extension](https://pqrs.org/osx/karabiner/document.html#usage). Follow the prompts to upgrade your life:
-    1. Click "Open System Preferences" [[screenshot]](https://github.com/jasonrudolph/keyboard/blob/v5.0.0/screenshots/karabiner-elements-system-extension-prompt-1.png)
-    1. Click "Allow" [[screenshot]](https://github.com/jasonrudolph/keyboard/blob/v5.0.0/screenshots/karabiner-elements-system-extension-prompt-2.png)
-
-## TODO
-
-- Add [#13](https://github.com/jasonrudolph/keyboard/pull/13) to [features](#features):
-    - Hold option for push-to-talk/push-to-mute
-    - Double-tap option to mute/unmute microphone
+3. You'll be [prompted to allow Karabiner-Elements to load its kernel extension](https://karabiner-elements.pqrs.org/docs/getting-started/installation/#open-karabiner-elements-preferences), followed by a [flurry of prompts related to input monitoring](https://karabiner-elements.pqrs.org/docs/getting-started/installation/#grant-input-monitoring-to-karabiner-elements-processes). Follow the prompts to upgrade your life.
 
 [customize]: http://dictionary.reference.com/browse/customize
 [don't-make-me-think]: http://en.wikipedia.org/wiki/Don't_Make_Me_Think
